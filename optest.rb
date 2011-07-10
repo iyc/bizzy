@@ -1,16 +1,20 @@
 
+# -----------------------------------------
 class Sql
   attr_accessor :var
 
+  # -----------------------------------------
   def =~(var)
     puts var
     #Sql.new(&block)
   end
   
+  # -----------------------------------------
   def test2(var)
     puts var
   end
 
+  # -----------------------------------------
   def test()
     test2('sgod')
     Sql::=~('dogs')
@@ -21,6 +25,7 @@ class Sql
   
 end
 
+# --
 Sql.new.test
 #Sql> {
 #  puts 'cats'
