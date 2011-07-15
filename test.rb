@@ -6,9 +6,8 @@
 #require 'ruby-debug'
 require 'rubygems'
 require 'sequel'
-
 require 'logger'
-#DB = Sequel.sqlite('test.db', :loggers => [Logger.new(STDOUT)])
+
 db = Sequel.sqlite('test.db', :loggers => [Logger.new(STDOUT)]) 
 
 load 'models.rb'  # gets the datastructures

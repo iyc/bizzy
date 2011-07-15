@@ -1,56 +1,104 @@
-#- models for test.rb
+#- models for physical
+
+# TODO
+# [-] link relationship tables
+# [-] seed data
 
 # -----------------------------------------------------------
-class Item < Sequel::Model
+class Task < Sequel::Model
   
-  #one_to_many :line_items, :key => [:item_id], :primary_key => [:item_id]
-  
+  associate :one_to_many, :links, :primary_key => [:taskid], :key => [:parentid]  
+  associate :one_to_many, :links, :primary_key => [:taskid], :key => [:childid]   
+
   # -----------------------------------------------------------
   def self.create_table!(db)
-    db.create_table! :items do
+    db.create_table! :tasks do      
+      Integer :taskid
+      primary_key [:taskid], :serial, :auto_increment => true
+
+      Integer :ownwhoid
+      Integer :stepownid
+      Integer :woid
+      Integer :stepid
+      Integer :appid
+      Integer :reqwhoid
+      Integer :orgtaskid
+      Integer :whoid
       
-      Integer :item_id
-      primary_key [:item_id], :serial, :auto_increment => true
-
-      String :item_name
-      Float :price0
-      Float :price1
+      String :name
+      String :note
     end
   end
 
 end
 
-# -----------------------------------------------------------
-class Line < Sequel::Model
-  
-  one_to_many :line_items, :key => [:line_id], :primary_key => [:line_id]
-  
+# --------------------------
+class Link < Sequel::Model
+
+  #one_to_many :key => [:line_id], :primary_key => [:line_id]  
+
   # -----------------------------------------------------------
   def self.create_table!(db)
-    db.create_table! :lines do
-      Integer :line_id
-      primary_key [:line_id], :serial, :auto_increment => true
-
+    db.create_table! :links do
+      Integer :parentid
+      Integer :childid
+      Integer :seq
+      primary_key [:parentid, :childid, :seq], :serial, :auto_increment => true
     end
   end
-
 end
 
-# -----------------------------------------------------------
-class LineItem < Sequel::Model
-
-  #one_to_many :line_item_bkts, :key=>[:line_id, :item_id], :primary_key => [:line_id, :item_id]
-  one_to_one :line, :key => [:line_id], :primary_key => [:line_id]
-  #one_to_one :item, :key => [:item_id], :primary_key => [:item_id]
-   
+# --------------------------
+class Client < Sequel::Model
   # -----------------------------------------------------------
   def self.create_table!(db)
-    db.create_table! :line_items do
-      Integer :line_id
-      Integer :item_id
-      primary_key [:line_id, :item_id]
+    db.create_table! :clients do
+      Integer :clientid
+      primary_key [:clientid], :serial, :auto_increment => true
+      
+      Integer :orgid, :siteid, :clientstatid
+      String :client, :firstname, :lastname, :jobtitle
+      String :street1, :street2, :city, :state, :zipcode, :busphone1, :busphone2, :homephone, :cellphone
+      Integer :countryid
+      
+      String :email1, :email2, :notes
+      
+    end#do
+  end#def
+  
+end#class
 
-      Integer :cost
-    end
-  end
-end
+# --------------------------
+class Who < Sequel::Model
+  
+  #one_to_many :links, :key => [:item_id], :primary_key => [:item_id]  
+  # -----------------------------------------------------------
+  def self.create_table!(db)
+    db.create_table! :whos do      
+      Integer :whoid
+      primary_key [:whoid], :serial, :auto_increment => true
+      Integer :orgid
+      String :who
+      String :name
+      String :email
+      String :whostatid
+      String :firstname
+      String :lastname
+    end#do
+  end#def
+end#class
+
+# --------------------------
+class Step < Sequel::Model
+  # -----------------------------------------------------------
+  def self.create_table!(db)
+    db.create_table! :steps do
+      Integer :stepid
+      primary_key [:stepid], :serial, :auto_increment => true
+      String :step
+      String :name
+      String :seq
+      Integer :itemid
+    end#do
+  end#def
+end#class

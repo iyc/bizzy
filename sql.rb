@@ -1,45 +1,39 @@
 
-def __
+# -----------------------------------------------------------
+def sql(&new_sql_block)
+  Sql.new(&new_sql_block)
 end
 
 # -----------------------
 class Sql < Object
   
   attr_accessor :joins
-  
+
   # -----------------------------------------------------------
   def initialize(&sql_block)
-    
     super
-    @fields = [] # array of SqlFields
+    
     @basetable = ""
-    @joins = {} # named hash of SqlTables, by table alias
-    @wheres = []
-    @orders = {} # named hash of SqlOrders, by field alias
-    @havings = []
-    
+    @fields, @joins, @wheres, @havings, @orders = [], [], [], [], []
+    @joins =  {} # named hash of SqlTables, by table alias
     @wheres.push(SqlWhere.new(self))
-    
+  
     if block_given?
       self.instance_eval(&sql_block)
     end
   end
-  
-  # -----------------------------------------------------------
-  def self.>(args*,&block)
-    Sql.new(args*,&block)
-  end
-  
+
   # -----------------------------------------------------------
   def select(field_expression, field_alias=field_expression)
     return @fields.push(SqlField.new(self, field_expression, field_alias)).last
   end
-  
+
   # -----------------------------------------------------------
   def from(source, from_alias=source)
+    @basetable = source
     @joins[from_alias] = SqlJoin.new(self, source, from_alias, :from)
   end
-    
+  
   # -----------------------------------------------------------
   def join(join_to, join_alias=join_to)
     @joins[join_alias] = SqlJoin.new(self, join_to, join_alias, :inner)
@@ -49,17 +43,17 @@ class Sql < Object
   def outerjoin(join_to, join_alias=join_to)
     @joins[join_alias] = SqlJoin.new(self, join_to, join_alias, :outer)
   end
-  
+
   # -----------------------------------------------------------
   def leftjoin(join_to, join_alias=join_to)
     @joins[join_alias] = SqlJoin.new(self, join_to, join_alias, :left)
   end
-  
+
   # -----------------------------------------------------------
   def rightjoin(join_to, join_alias=join_to)
     @joins[join_alias] = SqlJoin.new(self, join_to, join_alias, :right)
   end
-  
+
   # -----------------------------------------------------------
   def crossjoin(join_to, join_alias=join_to)
     @joins[join_alias] = SqlJoin.new(self, join_to, join_alias, :cross)
@@ -70,17 +64,17 @@ class Sql < Object
     @wheres.last.conditions.push(condition)
     return @wheres.last
   end
-  
+
   # -----------------------------------------------------------
   def begin_and()
     begin_and_or('and')
   end
-  
+
   # -----------------------------------------------------------
   def begin_or()
     begin_and_or('or')
   end
-  
+
   # -----------------------------------------------------------
   def begin_and_or(op)
     parent = @wheres.last
@@ -88,25 +82,25 @@ class Sql < Object
     parent.conditions.push(child)
     @wheres.push(child)
   end
-  
+
   # -----------------------------------------------------------
   def end_and()
     @wheres.pop()
   end
-  
+
   # -----------------------------------------------------------
   def end_or()
     @wheres.pop()
   end
-  
+
   # -----------------------------------------------------------
   def group()
   end
-    
+  
   # -----------------------------------------------------------
   def having()
   end
-  
+
   # -----------------------------------------------------------
   def order()
   end
@@ -114,47 +108,47 @@ class Sql < Object
   # -----------------------------------------------------------
   def union()
   end
-  
+
   # -----------------------------------------------------------
   def to_sql()
     sql = ''
-    
+  
     # fields
     sql = "select "
-    
+  
     #@fields.each { |field|
     #  sql += field.to_sql + ", "
     #}
-    
+  
     sql += @fields.join(', ') + ' '
-    
+  
     # joins
     @joins.each { |key, value|
       sql += value.to_sql + " "
     }
-    
+  
     # where
     where = @wheres.last.to_sql()
     if !where.empty?
       sql += 'where ' + where
     end
-    
+  
     # having
-    
+  
     # group
-    
+  
     # order
-    
+  
     return sql
 
   end
- 
+
 end
 
 # -----------------------
 class SqlField  < Object
   attr_accessor :sql, :alias, :expression, :table, :field_name
-  
+
   # -----------------------------------------------------------
   def initialize(sql, field_expression, field_alias)
     super()
@@ -189,7 +183,7 @@ class SqlField  < Object
       return "#{@expression}"
     end
   end
-  
+
   # -----------------------------------------------------------
   def to_s
     return to_sql
@@ -200,7 +194,7 @@ end
 # -----------------------
 class SqlJoin
   attr_accessor :sql, :alias, :source, :condition, :type
-  
+
   # -----------------------------------------------------------
   def initialize(sql, join_to, join_alias, join_type)
     super()
@@ -225,7 +219,7 @@ class SqlJoin
 
   # -----------------------------------------------------------
   def to_sql
-    
+  
     sql = "#{@join_sql[@type]} "
     if @source.class == Sql
       sql += " (#{@source.to_sql})"
@@ -245,19 +239,19 @@ end
 # -----------------------
 class SqlWhere
   attr_accessor :sql, :op, :conditions, :insql
-  
+
   # -----------------------------------------------------------
   def initialize(sql, op='and')
     @sql = sql
     @op = op
     @conditions = []
   end
-  
+
   # -----------------------------------------------------------
   def in(insql)
     @insql = insql
   end
-  
+
   # -----------------------------------------------------------
   def to_s()
     where_sql = ''
@@ -272,7 +266,7 @@ class SqlWhere
     end
     return where_sql
   end
-  
+
   # -----------------------------------------------------------
   def to_sql()
     return to_s()
@@ -284,38 +278,28 @@ class SqlOrder
   attr_accessor :field_alias, :descending
 end
 
-
-puts Sql.new{  
-  from { 
+sqlo = sql {
+  from( sql{
     from('plnact','pa')
     select('pa.plncomboid')
   }, 'a')
   
-  join(Sql>
-  {
+  join( sql{
     from('plncombo','pc')
     select('pc.plncomboid')
-  }+@, 'c') on('c.plncomboid = a.plncomboid')
+  }, 'c').on('c.plncomboid = a.plncomboid')
   
   select('c.plncomboid')
   
-  where('c.plncomboid').in( {
+  where('c.plncomboid').in( sql{
     from('plncombo')
     select('plncomboid')
-    where('statid').in(Sql.new{
-      
-    })
   })
   
   where('c.statid = 1')
-  
-  
-  #from('plnact', 'pa')
-  #join('calperiod').on('cp.calperiodid = pa.calperiodid')
-  #join('plncombo', 'pc').on('pc.plncomboid = pa.plncomboid')
-  #join('prods', 'p').on('p.prodid = pc.prodid')
-  #join('kinds', 'k').on('k.kindid = p.kindid')
-  #join('varietys', 'v').on('v.varietyid = p.varietyid')
+
+}
+
 
 =begin
   select('v.varietytag1')
@@ -339,8 +323,6 @@ puts Sql.new{
   
   where('pc.statid=1')
 =end
-
-}.to_sql
 
 
 =begin
