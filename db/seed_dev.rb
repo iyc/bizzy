@@ -1,8 +1,21 @@
 
-#- structures for test.rb
-User.destroy_all
-Task.destroy_all
-Link.destroy_all
+require './sql/sql'
+require 'sequel'
+require './model/models'
+DB = Sequel.sqlite
+Models.require_models   # "requires" up all app models
+Client.test
+Client.create_table!(DB)
+Client.seed
+
+=begin
+Link.create_table!(DB)
+Step.create_table!(DB)
+Task.create_table!(DB)
+User.create_table!(DB)
+
+
+
 
 #- Users --------------------------------------------------------------------------|
 beginning_user = User.create!(:name => 'Beginning User')
@@ -77,6 +90,5 @@ Task.create!(:name => "Root", :point_id => junior_lead.id).tap do |root|
         Link.create!(:parent_id => project.id, :task_id => task.id, :seq => 4)
       end
   end
-
-
 end
+=end
