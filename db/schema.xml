@@ -1,12 +1,11 @@
 <Schema>
 	<Tables>
-    	<Table name="Client">
-			<PrimaryKey columns="clientid"/>
-		    <Columns>
-				<Column name="clientid" type="integer"/>
-				<Column name="orgid" type="integer"/>
-				<Column name="siteid" type="integer"/>
-				<Column name="clientstatid" type="integer"/>
+    	<Table name="clients">
+			<Columns>
+				<Column name="clientid" type="number" length="10"/>
+				<Column name="orgid" type="number" length="10"/>
+				<Column name="siteid" type="number" length="10"/>
+				<Column name="clientstatid" type="number" length="10"/>
 				<Column name="firstname" type="string" length="50"/>
 				<Column name="lastname" type="string" length="50"/>
 				<Column name="jobtitle" type="string" length="50"/>
@@ -17,7 +16,7 @@
 				<Column name="state" type="string" length="50"/>
 				<Column name="zipcode" type="string" length="5"/>
 				<Column name="zip_ext" type="string" length="3"/>
-				<Column name="countryid" type="integer" length="3"/>
+				<Column name="countryid" type="number" length="10"/>
 				<Column name="busphone1" type="string" length="15"/>
 				<Column name="busphone2" type="string" length="15"/>
 				<Column name="homephone" type="string" length="15"/>
@@ -26,32 +25,82 @@
 				<Column name="email2" type="string" length="25"/>
 				<Column name="notes" type="string" length="250"/>
 			</Columns>
+			<Indexes>
+				<Index name="pk" primary_key="yes">
+					<Column name="clientid" seq="1"/>
+				</index>
+			</Indexes>
 			<Sequence name="client_seq"/>
 		</Table>
+
+		<Table name="links">
+			<Columns>
+				<Column name="parentid" type="number" length="10"/>
+				<Column name="childid" type="number" length="10"/>
+				<Column name="seq" type="number" length="10"/>
+			</Columns>
+			<Indexes>
+				<Index name="pk" primary_key="yes">
+					<Column name="parentid" seq="1"/>
+					<Column name="childid" seq="2"/>
+					<Column name="sequence" seq="3"/>
+				</Index>
+			</Indexes>
+		</Table>
+		
+		<Table name="steps">
+			<Columns>
+				<Column name="stepid" type="number" length="10"/>
+				<Column name="step" type="" length=""/>
+				<Column name="name" type="" length=""/>
+				<Column name="seq" type="" length=""/>
+				<Column name="itemid" type="number" length="10"/>
+			</Columns>
+			<Indexes>
+				<Index name="stepid" primary_key="yes">
+					<Column name="stepid" seq="1" />
+				</Index>
+			</Indexes>
+		</Table>
+
+		<Table name="">
+			<Columns>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+			</Columns>
+			<Indexes>
+				<Index name="" primary_key="">
+					<Column name="" seq="" />
+					<Column name="" seq="" />
+					<Column name="" seq="" />
+				</Index>
+			</Indexes>
+		</Table>
+
+		<Table name="">
+			<Columns>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+				<Column name="" type="" length=""/>
+			</Columns>
+			<Indexes>
+				<Index name="" primary_key="">
+					<Column name="" seq="" />
+					<Column name="" seq="" />
+					<Column name="" seq="" />
+				</Index>
+			</Indexes>
+		</Table>
+
+
 	</Tables>
 </Schema>
-
-Integer :clientid
-primary_key [:clientid], :serial, :auto_increment => true
-
-Integer :orgid
-Integer :siteid
-Integer :clientstatid
-String :lastname
-String :jobtitle
-
-String :client
-String :firstname
-String :street1
-String :street2
-String :city
-String :state
-String :zipcode
-Integer :countryid
-String :busphone1
-String :busphone2
-String :homephone
-String :cellphone      
-String :email1
-String :email2
-String :notes
