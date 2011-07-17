@@ -62,22 +62,26 @@
 				</Index>
 			</Indexes>
 		</Table>
+      String :name
+      String :note
 
-		<Table name="">
+		<Table name="tasks">
 			<Columns>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
+				<Column name="taskid" type="integer" length="10"/>
+				<Column name="ownwhoid" type="integer" length="10"/>
+				<Column name="stepownid" type="integer" length="10"/>
+				<Column name="woid" type="integer" length="10"/>
+				<Column name="stepid" type="integer" length="10"/>
+				<Column name="appid" type="integer" length="10"/>
+				<Column name="reqwhoid" type="integer" length="10"/>
+				<Column name="orgtaskid" type="integer" length="10"/>
+				<Column name="whoid" type="integer" length="10"/>
+				<Column name="name" type="string" length="10"/>
+				<Column name="note" type="string" length="250"/>
 			</Columns>
 			<Indexes>
-				<Index name="" primary_key="">
-					<Column name="" seq="" />
-					<Column name="" seq="" />
-					<Column name="" seq="" />
+				<Index name="taskid" primary_key="yes">
+					<Column name="taskid" seq="1" />
 				</Index>
 			</Indexes>
 		</Table>
