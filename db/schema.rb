@@ -7,7 +7,13 @@ end
 class XmlSchema < Schema
   # --------------------------------------------------------
   def initialize(schema_file)
-    
+    File.open(schema_file, "r") { |infile|
+      while (line = infile.gets)
+        case
+        when "<Table " in 
+        
+      end
+    }
   end
 end
 
@@ -28,3 +34,5 @@ end
 class Index
   attr_accessor :name, :columns
 end
+
+xmlSchema = XmlSchema.new('schema.xml')
