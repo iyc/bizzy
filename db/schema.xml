@@ -1,6 +1,8 @@
 <Schema>
 	<Tables>
-    	<Table name="clients">
+		
+		<!------------------------------------------------>
+		<Table name="clients">
 			<Columns>
 				<Column name="clientid" type="number" length="10"/>
 				<Column name="orgid" type="number" length="10"/>
@@ -33,6 +35,7 @@
 			<Sequence name="client_seq"/>
 		</Table>
 
+		<!------------------------------------------------>
 		<Table name="links">
 			<Columns>
 				<Column name="parentid" type="number" length="10"/>
@@ -47,7 +50,8 @@
 				</Index>
 			</Indexes>
 		</Table>
-		
+
+		<!------------------------------------------------>
 		<Table name="steps">
 			<Columns>
 				<Column name="stepid" type="number" length="10"/>
@@ -62,9 +66,8 @@
 				</Index>
 			</Indexes>
 		</Table>
-      String :name
-      String :note
 
+		<!------------------------------------------------>
 		<Table name="tasks">
 			<Columns>
 				<Column name="taskid" type="integer" length="10"/>
@@ -86,6 +89,7 @@
 			</Indexes>
 		</Table>
 
+		<!------------------------------------------------>
 		<Table name="">
 			<Columns>
 				<Column name="" type="" length=""/>
@@ -104,7 +108,5 @@
 				</Index>
 			</Indexes>
 		</Table>
-
-
 	</Tables>
 </Schema>
