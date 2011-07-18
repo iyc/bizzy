@@ -1,10 +1,14 @@
 
-begin 
-  x = 0
-  puts x + 'a'
+module Test
+  class Parent
+    def self.inherited(subclass)
+      puts self
+    end
+  end
 end
 
-puts x
+class Child < Test::Parent
+end
 
 
 =begin
@@ -66,7 +70,6 @@ puts sqlo.to_sql
   end_or
   
   where('pc.statid=1')
-=end
 
 
 =begin

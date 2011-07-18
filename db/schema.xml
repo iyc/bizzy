@@ -1,6 +1,5 @@
 <Schema>
 	<Tables>
-		
 		<!------------------------------------------------>
 		<Table name="clients">
 			<Columns>
@@ -38,6 +37,7 @@
 		<!------------------------------------------------>
 		<Table name="links">
 			<Columns>
+				<Column name="id" type="number" length="20" serial="yes" auto_increment="yes" seq="link_seq"/>
 				<Column name="parentid" type="number" length="10"/>
 				<Column name="childid" type="number" length="10"/>
 				<Column name="seq" type="number" length="10"/>
@@ -49,12 +49,13 @@
 					<Column name="sequence" seq="3"/>
 				</Index>
 			</Indexes>
+			<Sequence name="link_seq"/>
 		</Table>
 
 		<!------------------------------------------------>
 		<Table name="steps">
 			<Columns>
-				<Column name="stepid" type="number" length="10"/>
+				<Column name="stepid" type="number" length="10" serial="yes" auto_increment="yes" seq="step_seq"/>
 				<Column name="step" type="" length=""/>
 				<Column name="name" type="" length=""/>
 				<Column name="seq" type="" length=""/>
@@ -65,6 +66,7 @@
 					<Column name="stepid" seq="1" />
 				</Index>
 			</Indexes>
+			<Sequence name="step_seq"/>
 		</Table>
 
 		<!------------------------------------------------>
@@ -87,26 +89,40 @@
 					<Column name="taskid" seq="1" />
 				</Index>
 			</Indexes>
+			<Sequence name="task_seq"/>
 		</Table>
 
 		<!------------------------------------------------>
-		<Table name="">
+		<Table name="whos">
 			<Columns>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
-				<Column name="" type="" length=""/>
+				<Column name="whoid" type="number" length="10" serial="yes" auto_increment="yes" seq="who_seq"/>
+				<Column name="orgid" type="number" length="10"/>
+				<Column name="who" type="string" length="20"/>
+				<Column name="name" type="string" length="30"/>
+				<Column name="email" type="string" length="30"/>
+				<Column name="whostatid" type="number" length="3"/>
+				<Column name="lastname" type="string" length="30"/>
 			</Columns>
 			<Indexes>
-				<Index name="" primary_key="">
-					<Column name="" seq="" />
-					<Column name="" seq="" />
-					<Column name="" seq="" />
+				<Index name="whoid" primary_key="yes">
+					<Column name="whoid" seq="1" />
 				</Index>
 			</Indexes>
+			<Sequence name="who_seq"/>
 		</Table>
+
+		<!------------------------------------------------>
+		<Table name="appdata">
+			<Columns>
+				<Column name="id" type="number" length="20"  serial="yes" auto_increment="yes" seq="appdata_seq"/>
+			</Columns>
+			<Indexes>
+				<Index name="id" primary_key="yes">
+					<Column name="id" seq="1" />
+				</Index>
+			</Indexes>
+			<Sequence name="appdata_seq"/>
+		</Table>
+
 	</Tables>
 </Schema>

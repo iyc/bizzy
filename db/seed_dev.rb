@@ -2,6 +2,7 @@
 require './sql/sql'
 require 'sequel'
 require './model/models'
+
 DB = Sequel.sqlite
 Models.require_models   # "requires" up all app models
 Client.test
