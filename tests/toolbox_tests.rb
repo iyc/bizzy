@@ -1,10 +1,11 @@
 
 require "test/unit"
-require File.dirname(__FILE__) + '/../toolbox.rb'
+require File.dirname(__FILE__) + '/../rb/toolbox.rb'
 
 # ---------------------------
 class TestSql < Test::Unit::TestCase
   include Toolbox
+
   # ---------------------------
   def setup
     @test = QuickClass.new
