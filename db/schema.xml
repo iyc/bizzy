@@ -28,8 +28,8 @@
 			</Columns>
 			<Indexes>
 				<Index name="pk" primary_key="yes">
-					<Column name="clientid" seq="1"/>
-				</index>
+					<IndexColumn name="clientid" seq="1"/>
+				</Index>
 			</Indexes>
 			<Sequence name="client_seq"/>
 		</Table>
@@ -37,16 +37,16 @@
 		<!------------------------------------------------>
 		<Table name="links">
 			<Columns>
-				<Column name="id" type="number" length="20" serial="yes" auto_increment="yes" seq="link_seq"/>
+				<Column name="id" type="number" length="20" serial="yes" auto_increment="yes" sequence="link_seq"/>
 				<Column name="parentid" type="number" length="10"/>
 				<Column name="childid" type="number" length="10"/>
 				<Column name="seq" type="number" length="10"/>
 			</Columns>
 			<Indexes>
 				<Index name="pk" primary_key="yes">
-					<Column name="parentid" seq="1"/>
-					<Column name="childid" seq="2"/>
-					<Column name="sequence" seq="3"/>
+					<IndexColumn name="parentid" seq="1"/>
+					<IndexColumn name="childid" seq="2"/>
+					<IndexColumn name="sequence" seq="3"/>
 				</Index>
 			</Indexes>
 			<Sequence name="link_seq"/>
@@ -55,15 +55,15 @@
 		<!------------------------------------------------>
 		<Table name="steps">
 			<Columns>
-				<Column name="stepid" type="number" length="10" serial="yes" auto_increment="yes" seq="step_seq"/>
-				<Column name="step" type="" length=""/>
-				<Column name="name" type="" length=""/>
-				<Column name="seq" type="" length=""/>
+				<Column name="stepid" type="number" length="10" serial="yes" auto_increment="yes" sequence="step_seq"/>
+				<Column name="step" type="string" length="10"/>
+				<Column name="name" type="string" length="20"/>
+				<Column name="seq" type="string" length="10"/>
 				<Column name="itemid" type="number" length="10"/>
 			</Columns>
 			<Indexes>
 				<Index name="stepid" primary_key="yes">
-					<Column name="stepid" seq="1" />
+					<IndexColumn name="stepid" seq="1" />
 				</Index>
 			</Indexes>
 			<Sequence name="step_seq"/>
@@ -72,21 +72,21 @@
 		<!------------------------------------------------>
 		<Table name="tasks">
 			<Columns>
-				<Column name="taskid" type="integer" length="10"/>
-				<Column name="ownwhoid" type="integer" length="10"/>
-				<Column name="stepownid" type="integer" length="10"/>
-				<Column name="woid" type="integer" length="10"/>
-				<Column name="stepid" type="integer" length="10"/>
-				<Column name="appid" type="integer" length="10"/>
-				<Column name="reqwhoid" type="integer" length="10"/>
-				<Column name="orgtaskid" type="integer" length="10"/>
-				<Column name="whoid" type="integer" length="10"/>
+				<Column name="taskid" type="number" length="10"/>
+				<Column name="ownwhoid" type="number" length="10"/>
+				<Column name="stepownid" type="number" length="10"/>
+				<Column name="woid" type="number" length="10"/>
+				<Column name="stepid" type="number" length="10"/>
+				<Column name="appid" type="number" length="10"/>
+				<Column name="reqwhoid" type="number" length="10"/>
+				<Column name="orgtaskid" type="number" length="10"/>
+				<Column name="whoid" type="number" length="10"/>
 				<Column name="name" type="string" length="10"/>
 				<Column name="note" type="string" length="250"/>
 			</Columns>
 			<Indexes>
 				<Index name="taskid" primary_key="yes">
-					<Column name="taskid" seq="1" />
+					<IndexColumn name="taskid" seq="1" />
 				</Index>
 			</Indexes>
 			<Sequence name="task_seq"/>
@@ -95,7 +95,7 @@
 		<!------------------------------------------------>
 		<Table name="whos">
 			<Columns>
-				<Column name="whoid" type="number" length="10" serial="yes" auto_increment="yes" seq="who_seq"/>
+				<Column name="whoid" type="number" length="10" serial="yes" auto_increment="yes" sequence="who_seq"/>
 				<Column name="orgid" type="number" length="10"/>
 				<Column name="who" type="string" length="20"/>
 				<Column name="name" type="string" length="30"/>
@@ -105,7 +105,7 @@
 			</Columns>
 			<Indexes>
 				<Index name="whoid" primary_key="yes">
-					<Column name="whoid" seq="1" />
+					<IndexColumn name="whoid" seq="1" />
 				</Index>
 			</Indexes>
 			<Sequence name="who_seq"/>
@@ -114,11 +114,11 @@
 		<!------------------------------------------------>
 		<Table name="appdata">
 			<Columns>
-				<Column name="id" type="number" length="20"  serial="yes" auto_increment="yes" seq="appdata_seq"/>
+				<Column name="id" type="number" length="20"  serial="yes" auto_increment="yes" sequence="appdata_seq"/>
 			</Columns>
 			<Indexes>
 				<Index name="id" primary_key="yes">
-					<Column name="id" seq="1" />
+					<IndexColumn name="id" seq="1" />
 				</Index>
 			</Indexes>
 			<Sequence name="appdata_seq"/>

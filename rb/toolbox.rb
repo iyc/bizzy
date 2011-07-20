@@ -1,6 +1,7 @@
 
 # -----------------------------------------------------
 module Kernel
+  
   # -----------------------------------------------------
   def Boolean(string)
     return true if string == true || string =~ /^true$/i
