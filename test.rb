@@ -26,6 +26,15 @@ end
 
 puts DB[:items].count
 
+=end
+
+oSql = Sql.new
+oSql.from('plnact')
+oSql.select('*')
+sql_statment = oSql.build
+oSql = Sql.new
+
+oSql.from(sql_statement)
 
 sqlo = sql {
   from( sql{
@@ -70,7 +79,7 @@ puts sqlo.to_sql
   end_or
   
   where('pc.statid=1')
-
+=end
 
 =begin
   from('plnact', 'pa')
